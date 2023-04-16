@@ -15,7 +15,7 @@ type typesObjectLanguagefromAPI = {
 }
 
 
-async function typeLanguage() {
+async function typeLanguage(): Promise<typesObjectLanguagefromAPI> {
     const options = {
         method: 'GET',
         url: 'https://google-translate1.p.rapidapi.com/language/translate/v2/languages',
@@ -26,10 +26,14 @@ async function typeLanguage() {
         }
     };
     
-    axios.request(options).then(function (response) {
-        console.log(response.data);
-    }).catch(function (error) {
-        console.error(error);
-    });
+   await axios.request(options)
+    .then((response) => {console.log(response.data)
+                                                      
+    })
+    .catch((error) => {console.error(error)});
+
+return(
+
+)
 }
 
