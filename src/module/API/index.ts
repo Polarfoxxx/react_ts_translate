@@ -1,0 +1,1 @@
+ export { default as servicestypeLanguage } from "./typeLanguage.API"
