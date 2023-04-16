@@ -1,21 +1,17 @@
 
 import axios from "axios";
-import { type } from "os";
+import { typesObjectLanguagefromAPI } from "./types";
 
 const servicestypeLanguage = {
     typeLanguage
 }
 export default servicestypeLanguage
 
-type typesLanguagefromAPI = {
-    allLanguage: string 
-}
-type typesObjectLanguagefromAPI = {
-    allLanguage : typesLanguagefromAPI[]
-}
 
 
-async function typeLanguage(): Promise<typesObjectLanguagefromAPI> {
+async function typeLanguage(): Promise<typesObjectLanguagefromAPI | undefined> {
+    let allLanguageArray: typesObjectLanguagefromAPI | undefined = undefined
+
     const options = {
         method: 'GET',
         url: 'https://google-translate1.p.rapidapi.com/language/translate/v2/languages',
@@ -27,13 +23,11 @@ async function typeLanguage(): Promise<typesObjectLanguagefromAPI> {
     };
     
    await axios.request(options)
-    .then((response) => {console.log(response.data)
-                                                      
-    })
+    .then((response) => {allLanguageArray = response.data.data.languages})
     .catch((error) => {console.error(error)});
 
 return(
-
+    allLanguageArray
 )
 }
 

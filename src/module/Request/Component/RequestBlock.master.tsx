@@ -1,35 +1,36 @@
 import "../style/RequestBlock.master.style.css"
 import { useEffect, useState } from "react";
 
-function RequestBlock(): JSX.Element {
-    const options = [
-        {
-            label: "Apple",
-            value: "apple",
-        },
-        {
-            label: "Mango",
-            value: "mango",
-        },
-        {
-            label: "Banana",
-            value: "banana",
-        },
-        {
-            label: "Pineapple",
-            value: "pineapple",
-        },
-    ];
+import { servicestypeLanguage } from "../../API";
 
+import { typesLanguagefromAPI } from "../../API/types";
+import { typesObjectLanguagefromAPI } from "../../API/types";
+
+
+function RequestBlock(): JSX.Element {
+const [ allLaugues, setAllLaugues ] = useState()
+
+
+    useEffect(() => {
+        servicestypeLanguage.typeLanguage()
+        .then(data => {setAllLaugues(data)})
+
+        .catch(err => console.log(err))
+    }, []) 
     
 
     return (
         <div className="requestBlock">
             <div className="reqInputBlock">
                 <select>
-                    {options.map((option) => (
-                        <option value={option.value}>{option.label}</option>
-                    ))}
+                    {
+                        allLaugues !== undefined ? 
+                    allLaugues.map((option : typesLanguagefromAPI) => (
+                        <option>{option.language}</option>
+                    )) : ""
+                
+                
+                }
                 </select>
             </div>
         </div>
