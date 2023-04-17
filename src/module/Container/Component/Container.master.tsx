@@ -1,21 +1,37 @@
+import { createContext, useEffect, useState } from "react"
+
 import "../style/Container.master.style.css"
 
-type Props = {
-    children: JSX.Element | JSX.Element[]
-}
+import { typeContext } from "../types"
+import { Props } from "../types"
+
+
+const Context = createContext<typeContext>({
+    translate: false,
+    setTranslate: () => { }
+})
 
 /* const Container: React.FC<Props> = ({ children }) => { */
 /* const Container = ( props : Props) => {  */
-function Container({children} : Props ): JSX.Element { 
 
-    return(
+function Provider({ children }: Props): JSX.Element {
+    const [translate, setTranslate] = useState(false)
+
+    return (
         <div className="container">
-            { children }
+            <Context.Provider value={{ translate, setTranslate }}>
+                {children}
+            </Context.Provider>
         </div>
     )
 }
 
-export default Container
+const ContainerTranslate = {
+    Context,
+    Provider
+}
+
+export default ContainerTranslate
 
 
 

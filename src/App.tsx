@@ -1,5 +1,5 @@
 import './App.css';
-import { Container } from './module/Container';
+import ContainerTranslate from './module/Container/Component/Container.master';
 
 import { RequestBlock } from './module/Request';
 import { BtnTranslate } from './module/BtnTranslate';
@@ -10,11 +10,11 @@ function App(): JSX.Element {
   
   return (
     <div className="App">
-      <Container>
+      <ContainerTranslate.Provider>
         <RequestBlock />
         <BtnTranslate />
         <ResponzeBlock />
-      </Container>
+      </ContainerTranslate.Provider>
     </div>
   );
 }
