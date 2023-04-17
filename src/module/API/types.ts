@@ -2,6 +2,8 @@
 export type typesLanguagefromAPI = {
     language: string 
 }
-export type typesObjectLanguagefromAPI = {
-    allLanguage : typesLanguagefromAPI[]
-}
+
+export type typesObjectLanguagefromAPI = 
+    typesLanguagefromAPI[]
+
+

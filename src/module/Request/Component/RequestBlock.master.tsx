@@ -8,30 +8,39 @@ import { typesObjectLanguagefromAPI } from "../../API/types";
 
 
 function RequestBlock(): JSX.Element {
-const [ allLaugues, setAllLaugues ] = useState()
-
+    const [allLaugues, setAllLaugues] = useState<typesObjectLanguagefromAPI | undefined>([])
 
     useEffect(() => {
         servicestypeLanguage.typeLanguage()
-        .then(data => {setAllLaugues(data)})
+            .then(data => { setAllLaugues(data) })
+            .catch(err => console.log(err))
+    }, [])
 
-        .catch(err => console.log(err))
-    }, []) 
-    
+    const handleLanguage = (e: React.ChangeEvent<HTMLSelectElement>): void => {
+        const buttonIdent = e.target.value;;
+        console.log(buttonIdent);
+    }
 
     return (
         <div className="requestBlock">
-            <div className="reqInputBlock">
-                <select>
+            <div className="reqSelectorBlock">
+                <select onChange={(e) => handleLanguage(e)}>
                     {
-                        allLaugues !== undefined ? 
-                    allLaugues.map((option : typesLanguagefromAPI) => (
-                        <option>{option.language}</option>
-                    )) : ""
-                
-                
-                }
+                        allLaugues !== undefined ?
+                            allLaugues.map((option: typesLanguagefromAPI, key: number) => (
+                                <option key={key}>
+                                    {option.language}
+                                </option>
+                            )) : ""
+                    }
                 </select>
+            </div>
+            <div className="reqTextarrBlock">
+                <textarea 
+                    name="txt" 
+                    id=""
+                    placeholder="What you need to translate...">
+                </textarea>
             </div>
         </div>
     )

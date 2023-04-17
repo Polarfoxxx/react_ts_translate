@@ -8,7 +8,6 @@ const servicestypeLanguage = {
 export default servicestypeLanguage
 
 
-
 async function typeLanguage(): Promise<typesObjectLanguagefromAPI | undefined> {
     let allLanguageArray: typesObjectLanguagefromAPI | undefined = undefined
 
@@ -23,11 +22,14 @@ async function typeLanguage(): Promise<typesObjectLanguagefromAPI | undefined> {
     };
     
    await axios.request(options)
+
     .then((response) => {allLanguageArray = response.data.data.languages})
     .catch((error) => {console.error(error)});
 
-return(
-    allLanguageArray
-)
+    return(
+        allLanguageArray
+    )
 }
+
+
 
