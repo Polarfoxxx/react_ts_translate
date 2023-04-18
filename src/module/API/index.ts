@@ -1,1 +1,2 @@
- export { default as servicestypeLanguage } from "./typeLanguage.API"
+ export { default as servicestypeLanguage } from "./language.API"
+ export { default as servicesTranslate } from "./translate.API"

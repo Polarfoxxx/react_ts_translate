@@ -10,16 +10,25 @@ import { typesObjectLanguagefromAPI } from "../../API/types";
 function RequestBlock(): JSX.Element {
     const [allLaugues, setAllLaugues] = useState<typesObjectLanguagefromAPI | undefined>([])
 
+    /* nahrahtie vsetkych dostupnch jazykov do selectoru */
     useEffect(() => {
         servicestypeLanguage.typeLanguage()
             .then(data => { setAllLaugues(data) })
             .catch(err => console.log(err))
     }, [])
 
+
+    /* ulozenie prekladaneho textu a povodnehi jayzyka do localUloziska */
     const handleLanguage = (e: React.ChangeEvent<HTMLSelectElement>): void => {
-        const buttonIdent = e.target.value;;
-        console.log(buttonIdent);
+        const reqLang = e.target.value
+        sessionStorage.setItem("reqLang", reqLang)
     }
+
+    const handleAreaText = (e: React.ChangeEvent<HTMLTextAreaElement>): void => {
+        const reqText = e.currentTarget.value
+        sessionStorage.setItem("reqText", reqText)
+    }
+
 
     return (
         <div className="requestBlock">
@@ -36,8 +45,9 @@ function RequestBlock(): JSX.Element {
                 </select>
             </div>
             <div className="reqTextarrBlock">
-                <textarea 
-                    name="txt" 
+                <textarea
+                    onChange={handleAreaText}
+                    name="txt"
                     id=""
                     placeholder="What you need to translate...">
                 </textarea>
