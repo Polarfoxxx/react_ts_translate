@@ -6,27 +6,31 @@ import { servicesTranslate } from "../../API";
 
 import { typesLanguagefromAPI } from "../../API/types";
 import { typesObjectLanguagefromAPI } from "../../API/types";
+import { typeFineTranslate } from "../../API/types";
 
 import ContainerTranslate from "../../Container/Component/Container.master";
-import { log } from "console";
 
 
 function ResponzeBlock(): JSX.Element {
     const [allLaugues, setAllLaugues] = useState<typesObjectLanguagefromAPI | undefined>([])
     const { translate, setTranslate } = useContext(ContainerTranslate.Context)
+    const [resLang, setResLang] = useState("")
+    const [finalTranslate, setFinalTranslate] = useState<typeFineTranslate>()
 
     useEffect(() => {
         servicestypeLanguage.typeLanguage()
             .then(data => { setAllLaugues(data) })
-            .catch(err => console.log(err))
+            .catch(err => console.log(err)) 
     }, [])
 
     useEffect(() => {
         if (translate) {
-            const reqLang = sessionStorage.getItem("reqLang")
-            console.log(reqLang);
-            const reqText = sessionStorage.getItem("reqText")
-            console.log(reqText);
+            const reqLang = sessionStorage.getItem("reqLang") ? sessionStorage.getItem("reqLang") : "en"
+            const reqText = sessionStorage.getItem("reqText") ? sessionStorage.getItem("reqText") : "undefined" 
+
+            servicesTranslate.translateAPI(reqText, resLang, reqLang)
+                .then((data) => {setFinalTranslate(data)})
+                .catch((err) => console.error(err))
         }
         setTranslate(false)
     }, [translate])
@@ -34,8 +38,8 @@ function ResponzeBlock(): JSX.Element {
 
 
     const handleLanguage = (e: React.ChangeEvent<HTMLSelectElement>): void => {
-        const buttonIdent = e.target.value;;
-        console.log(buttonIdent);
+        const resLang = e.target.value
+        setResLang(resLang)
     }
 
     return (
@@ -55,7 +59,7 @@ function ResponzeBlock(): JSX.Element {
             <div className="resTextarrBlock">
                 <textarea
                     name="txt"
-                    id="">
+                    value={finalTranslate?.translatedText}>
                 </textarea>
             </div>
         </div>

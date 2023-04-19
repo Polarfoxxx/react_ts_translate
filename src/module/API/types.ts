@@ -1,9 +1,12 @@
 
 export type typesLanguagefromAPI = {
-    language: string 
+    language: string
 }
 
-export type typesObjectLanguagefromAPI = 
+export type typesObjectLanguagefromAPI =
     typesLanguagefromAPI[]
 
 
+export type typeFineTranslate = {
+    translatedText: string
+}

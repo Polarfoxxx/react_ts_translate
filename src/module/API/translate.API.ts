@@ -1,5 +1,5 @@
 import axios from "axios";
-
+import { typeFineTranslate } from "./types";
 
 const servicesTranslateAPI = {
     translateAPI
@@ -7,12 +7,14 @@ const servicesTranslateAPI = {
 
 export default servicesTranslateAPI
 
-async function translateAPI(): Promise<any> {
+
+async function translateAPI(reqText: string | null, resLang: string | null, reqLang: string | null): Promise<typeFineTranslate> {
+    let finTranslate: typeFineTranslate = { translatedText: "" }
 
     const encodedParams = new URLSearchParams();
-    encodedParams.append("q", "Hello, world!");
-    encodedParams.append("target", "es");
-    encodedParams.append("source", "en");
+    encodedParams.append("q", `${reqText}`);
+    encodedParams.append("target", `${resLang}`);
+    encodedParams.append("source", `${reqLang}`);
 
     const options = {
         method: 'POST',
@@ -26,10 +28,10 @@ async function translateAPI(): Promise<any> {
         data: encodedParams
     };
 
-   await axios.request(options).then(function (response) {
-        console.log(response.data);
-    }).catch(function (error) {
-        console.error(error);
-    });
-
+    await axios.request(options)
+        .then(response => finTranslate = response.data.data.translations[0])
+        .catch(error => console.error(error));
+    return (
+        finTranslate
+    )
 }
