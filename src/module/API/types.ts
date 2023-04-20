@@ -1,6 +1,7 @@
 
 export type typesLanguagefromAPI = {
-    language: string
+    language: string,
+    name: string
 }
 
 export type typesObjectLanguagefromAPI =

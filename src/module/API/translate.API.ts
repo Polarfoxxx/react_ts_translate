@@ -11,6 +11,10 @@ export default servicesTranslateAPI
 async function translateAPI(reqText: string | null, resLang: string | null, reqLang: string | null): Promise<typeFineTranslate> {
     let finTranslate: typeFineTranslate = { translatedText: "" }
 
+    console.log(reqText);
+    console.log(reqLang);
+    console.log(resLang);
+    
     const encodedParams = new URLSearchParams();
     encodedParams.append("q", `${reqText}`);
     encodedParams.append("target", `${resLang}`);

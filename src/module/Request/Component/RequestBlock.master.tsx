@@ -1,14 +1,19 @@
 import "../style/RequestBlock.master.style.css"
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 
 import { servicestypeLanguage } from "../../API";
 
 import { typesLanguagefromAPI } from "../../API/types";
 import { typesObjectLanguagefromAPI } from "../../API/types";
 
+import ContainerTranslate from "../../Container/Component/Container.master";
+
 
 function RequestBlock(): JSX.Element {
     const [allLaugues, setAllLaugues] = useState<typesObjectLanguagefromAPI | undefined>([])
+    const { translate, requestLang, setRequestLang } = useContext(ContainerTranslate.Context)
+    const [requestText, setRequestText] = useState("")
+
 
     /* nahrahtie vsetkych dostupnch jazykov do selectoru */
     useEffect(() => {
@@ -17,27 +22,35 @@ function RequestBlock(): JSX.Element {
             .catch(err => console.log(err))
     }, [])
 
-
-    /* ulozenie prekladaneho textu a povodnehi jayzyka do localUloziska */
+    /* ulozenie povodneho jayzyka do localUloziska */
     const handleLanguage = (e: React.ChangeEvent<HTMLSelectElement>): void => {
         const reqLang = e.target.value
-        sessionStorage.setItem("reqLang", reqLang)
+        setRequestLang(reqLang)
     }
-
+    /* ulozenie prekladaneho textu do localUloziska */
     const handleAreaText = (e: React.ChangeEvent<HTMLTextAreaElement>): void => {
         const reqText = e.currentTarget.value
+        setRequestText(reqText)
         sessionStorage.setItem("reqText", reqText)
     }
 
+    /* vymazanie textArea po preklade */
+    useEffect(() => {
+        setRequestText("")
+    }, [translate])
+
+   
 
     return (
         <div className="requestBlock">
             <div className="reqSelectorBlock">
-                <select onChange={(e) => handleLanguage(e)}>
+                <select
+                    onChange={(e) => handleLanguage(e)}
+                    value={requestLang}>
                     {
                         allLaugues !== undefined ?
                             allLaugues.map((option: typesLanguagefromAPI, key: number) => (
-                                <option key={key}>
+                                <option key={key} value={option.language}>
                                     {option.language}
                                 </option>
                             )) : ""
@@ -48,8 +61,9 @@ function RequestBlock(): JSX.Element {
                 <textarea
                     onChange={handleAreaText}
                     name="txt"
-                    id=""
-                    placeholder="What you need to translate...">
+                    placeholder="What you need to translate..."
+                    value={requestText}
+                >
                 </textarea>
             </div>
         </div>

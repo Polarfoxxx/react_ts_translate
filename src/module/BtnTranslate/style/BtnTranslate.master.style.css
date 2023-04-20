@@ -5,7 +5,32 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    border-bottom: 1px solid yellow;
+    position: relative;
 }
+.btnBlock .rotateLang{
+    width: 80px;
+    height: 80px;
+    position: absolute;
+    right: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+}
+.btnBlock .rotateLang > button{
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    font-size: 30px;
+    background-color: rgb(182, 182, 0);
+    cursor: pointer;
+}
+.btnBlock .rotateLang > button:hover{
+    background-color: yellow;
+}
+
+
 .btnBlock > button{
     width: 40%;
     height: 70%;
@@ -16,5 +41,6 @@
     transition: 0.3s;
 }
 .btnBlock > button:hover{
-    transform: scale(1.07);
+    transform: scale(1.02);
+    background-color: yellow;
 }
