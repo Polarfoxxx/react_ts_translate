@@ -7,7 +7,7 @@ import { ResponzeBlock } from './module/Responze';
 
 
 function App(): JSX.Element {
-  
+
   return (
     <div className="App">
       <ContainerTranslate.Provider>

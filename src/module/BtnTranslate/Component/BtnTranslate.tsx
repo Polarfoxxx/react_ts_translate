@@ -5,24 +5,20 @@ import ContainerTranslate from "../../Container/Component/Container.master";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faRotate } from '@fortawesome/free-solid-svg-icons'
 
-import { servicesRotationLang } from "../../Request/services";
-
 
 function BtnTranslate(): JSX.Element {
-    const { setTranslate } = useContext(ContainerTranslate.Context)
+    const { setTranslate, setRequestLang, responseLang, setResponseLang, requestLang } = useContext(ContainerTranslate.Context)
 
     /* spustenie prekladu */
     const handleTranslate = (e: React.MouseEvent<HTMLButtonElement>): void => {
         setTranslate(true)
     }
-    
+
     /* rotacia jazykov */
     const handleRotateLang = (): void => {
-     
-            
+        setRequestLang(responseLang)
+        setResponseLang(requestLang)
     }
-
-
 
     return (
         <div className="btnBlock">

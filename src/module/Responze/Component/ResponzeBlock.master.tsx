@@ -10,13 +10,10 @@ import { typeFineTranslate } from "../../API/types";
 
 import ContainerTranslate from "../../Container/Component/Container.master";
 
-
 function ResponzeBlock(): JSX.Element {
     const [allLaugues, setAllLaugues] = useState<typesObjectLanguagefromAPI | undefined>([])
-    const { translate, setTranslate, responseLang, setResponseLang } = useContext(ContainerTranslate.Context)
+    const { translate, setTranslate, responseLang, setResponseLang, requestLang } = useContext(ContainerTranslate.Context)
     const [finalTranslate, setFinalTranslate] = useState<typeFineTranslate>()
-
-
 
     /* nahrahtie vsetkych dostupnch jazykov do selectoru */
     useEffect(() => {
@@ -25,13 +22,11 @@ function ResponzeBlock(): JSX.Element {
             .catch(err => console.log(err))
     }, [])
 
-
-    /* nacitanie stavou u lokalneho uloziska spustenie prekladu*/
+    /* nacitanie textu na preklad a spustenie prekladu*/
     useEffect(() => {
         if (translate) {
-            const reqLang = sessionStorage.getItem("reqLang") || ""
-            const reqText = sessionStorage.getItem("reqText") || ""
-            servicesTranslate.translateAPI(reqText, responseLang, reqLang)
+            const text = sessionStorage.getItem("reqText") || ""
+            servicesTranslate.translateAPI(text, responseLang, requestLang)
                 .then((data) => { setFinalTranslate(data) })
                 .catch((err) => console.error(err))
         }
@@ -43,19 +38,19 @@ function ResponzeBlock(): JSX.Element {
         const resLang = e.target.value
         setResponseLang(resLang)
     }
-    
+
 
     return (
         <div className="responzeBlock">
             <div className="resSelectorBlock">
-                <select 
-                        onChange={(e) => handleLanguage(e)}
-                        value={responseLang}>
+                <select
+                    onChange={(e) => handleLanguage(e)}
+                    value={responseLang}>
                     {
                         allLaugues !== undefined ?
                             allLaugues.map((option: typesLanguagefromAPI, key: number) => (
                                 <option key={key} value={option.language}>
-                                    {option.language}
+                                    {option.name}
                                 </option>
                             )) : ""
                     }

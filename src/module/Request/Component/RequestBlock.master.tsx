@@ -14,7 +14,6 @@ function RequestBlock(): JSX.Element {
     const { translate, requestLang, setRequestLang } = useContext(ContainerTranslate.Context)
     const [requestText, setRequestText] = useState("")
 
-
     /* nahrahtie vsetkych dostupnch jazykov do selectoru */
     useEffect(() => {
         servicestypeLanguage.typeLanguage()
@@ -22,7 +21,7 @@ function RequestBlock(): JSX.Element {
             .catch(err => console.log(err))
     }, [])
 
-    /* ulozenie povodneho jayzyka do localUloziska */
+    /* nastavenie povodneho stavu jazyka */
     const handleLanguage = (e: React.ChangeEvent<HTMLSelectElement>): void => {
         const reqLang = e.target.value
         setRequestLang(reqLang)
@@ -30,16 +29,14 @@ function RequestBlock(): JSX.Element {
     /* ulozenie prekladaneho textu do localUloziska */
     const handleAreaText = (e: React.ChangeEvent<HTMLTextAreaElement>): void => {
         const reqText = e.currentTarget.value
-        setRequestText(reqText)
         sessionStorage.setItem("reqText", reqText)
+        setRequestText(reqText)
     }
 
     /* vymazanie textArea po preklade */
     useEffect(() => {
         setRequestText("")
     }, [translate])
-
-   
 
     return (
         <div className="requestBlock">
@@ -51,7 +48,7 @@ function RequestBlock(): JSX.Element {
                         allLaugues !== undefined ?
                             allLaugues.map((option: typesLanguagefromAPI, key: number) => (
                                 <option key={key} value={option.language}>
-                                    {option.language}
+                                    {option.name}
                                 </option>
                             )) : ""
                     }
